@@ -6,7 +6,7 @@
     <title>Hello Page</title>
     <style>
         body {
-            background-color: #333;
+            background-color: #111; /* Arka planı daha koyu hale getir */
             color: white;
             display: flex;
             justify-content: center;
@@ -16,6 +16,18 @@
         }
         .content {
             text-align: center;
+        }
+        ol {
+            width: 500px; /* Liste öğelerinin genişliğini ayarla */
+            margin: 0 auto; /* Liste öğelerini yatayda ortala */
+            border: 2px solid green; /* Yeşil çizgili sınır ekle */
+            padding: 20px; /* Kenar boşlukları ekle */
+            border-radius: 10px; /* Kenarlara yuvarlaklık ekle */
+            background-color: rgba(0, 128, 0, 0.5); /* Arka plan rengini yeşil yap, biraz saydamlık ekle */
+        }
+        ol li {
+            text-align: left; /* Liste öğelerini sola hizala */
+            margin-bottom: 10px; /* Liste öğeleri arasına boşluk ekle */
         }
     </style>
 </head>
@@ -34,7 +46,7 @@
             </li>
             <li>Add the provider you want to the end of the url: <br>
             <code>https://YOURDOMAIN.com/api/webhooks/firstPartOfWebhook/secondPartOfWebhook/providerGoesHere</code></li>
-        </ol>>
+        </ol>
     </div>
 </body>
 </html>
