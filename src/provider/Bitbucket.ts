@@ -7,6 +7,11 @@ import { MarkdownUtil } from '../util/MarkdownUtil.js'
  */
 export class BitBucket extends TypeParseProvider {
 
+    private blue = 0x205081
+    private red = 0xB82D3D
+    private yellow = 0xFFA500
+    private green = 0x2db83d
+
     private static _formatLargeString(str: string, limit = 256): string {
         return str.length > limit ? str.substring(0, limit - 1) + '\u2026' : str
     }
@@ -30,7 +35,7 @@ export class BitBucket extends TypeParseProvider {
 
     constructor() {
         super()
-        this.setEmbedColor(0x205081)
+        this.setEmbedColor(this.blue)
         this.embed = {}
     }
 
@@ -70,7 +75,7 @@ export class BitBucket extends TypeParseProvider {
         ]
     }
 
-    public async repoPush(): Promise<void> {
+    public async repoPush(): Promise<void> {       
         if (this.body.push != null && this.body.push.changes != null) {
             for (let i = 0; (i < this.body.push.changes.length && i < 4); i++) {
                 const change = this.body.push.changes[i]
@@ -170,6 +175,12 @@ export class BitBucket extends TypeParseProvider {
         this.embed.title = this.body.commit_status.name
         this.embed.url = this.body.commit_status.url
         this.embed.description = '**State:** ' + this.body.commit_status.state + '\n' + this.body.commit_status.description
+        if(this.body.commit_status.state === "INPROGRESS")
+            this.setEmbedColor(this.yellow)
+        else if(this.body.commit_status.state === "FAILED")
+            this.setEmbedColor(this.red)
+        else
+            this.setEmbedColor(this.green)
         this.addEmbed(this.embed)
     }
 
@@ -296,7 +307,7 @@ export class BitBucket extends TypeParseProvider {
         this.embed.author = this.extractAuthor()
         this.embed.title = `[${this.body.repository.full_name}] Approved pull request: #${this.body.pullrequest.id} ${this.body.pullrequest.title}`
         this.embed.url = this.extractPullRequestUrl()
-        this.setEmbedColor(0x2db83d)
+        this.setEmbedColor(this.green)
         this.addEmbed(this.embed)
     }
 
@@ -304,6 +315,7 @@ export class BitBucket extends TypeParseProvider {
         this.embed.author = this.extractAuthor()
         this.embed.title = `[${this.body.repository.full_name}] Removed approval for pull request: #${this.body.pullrequest.id} ${this.body.pullrequest.title}`
         this.embed.url = this.extractPullRequestUrl()
+        this.setEmbedColor(this.yellow)
         this.addEmbed(this.embed)
     }
 
@@ -319,6 +331,7 @@ export class BitBucket extends TypeParseProvider {
         this.embed.title = `[${this.body.repository.full_name}] Rejected pull request: #${this.body.pullrequest.id} ${this.body.pullrequest.title}`
         this.embed.url = this.extractPullRequestUrl()
         this.embed.description = (typeof this.body.pullrequest.reason !== 'undefined') ? ((this.body.pullrequest.reason.replace(/<.*?>/g, '').length > 1024) ? this.body.pullrequest.reason.replace(/<.*?>/g, '').substring(0, 1023) + '\u2026' : this.body.pullrequest.reason.replace(/<.*?>/g, '')) : ''
+        this.setEmbedColor(this.red)
         this.addEmbed(this.embed)
     }
 
@@ -350,7 +363,7 @@ export class BitBucket extends TypeParseProvider {
         this.embed.author = this.extractAuthor()
         this.embed.title = `[${this.body.repository.full_name}] Changes requested for pull request: #${this.body.pullrequest.id} ${this.body.pullrequest.title}`
         this.embed.url = this.extractPullRequestUrl()
-        this.setEmbedColor(0xffa500)
+        this.setEmbedColor(this.yellow)
         this.addEmbed(this.embed)
     }
 

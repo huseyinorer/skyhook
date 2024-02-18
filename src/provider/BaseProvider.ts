@@ -1,7 +1,7 @@
-import camel from 'camelcase'
-import winston from 'winston'
 import { DiscordPayload, Embed } from '../model/DiscordApi.js'
 import { LoggerUtil } from '../util/LoggerUtil.js'
+import camel from 'camelcase'
+import winston from 'winston'
 
 /**
  * Base provider, which all other providers will subclass. You can then
@@ -87,8 +87,8 @@ export abstract class BaseProvider {
         // TODO check to see if too many fields
         // add the footer to all embeds added
         embed.footer = {
-            text: 'Powered by skyhookapi.com',
-            icon_url: 'https://skyhookapi.com/images/skyhook-tiny.png'
+            text: 'Abis Teknoloji <3' ,
+            icon_url: 'https://i.ibb.co/vvRcqhb/abis-teknoloji-logo.png'
         }
         if (this.embedColor != null) {
             embed.color = this.embedColor
@@ -96,6 +96,8 @@ export abstract class BaseProvider {
         if (this.payload.embeds == null) {
             this.payload.embeds = []
         }
+        embed.image = {url:'https://i.stack.imgur.com/Fzh0w.png'}
+        embed.timestamp = new Date().toISOString()
         this.payload.embeds.push(embed)
     }
 

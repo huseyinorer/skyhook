@@ -1,16 +1,8 @@
-import dotenv from 'dotenv'
-import axios from 'axios'
-import express, { Response } from 'express'
-import cors from 'cors'
 import { DiscordPayload } from './model/DiscordApi.js'
-import { BaseProvider } from './provider/BaseProvider.js'
-import { ErrorUtil } from './util/ErrorUtil.js'
-import { LoggerUtil } from './util/LoggerUtil.js'
-import * as fs from 'fs'
-
 import { AppCenter } from './provider/AppCenter.js'
 import { AppVeyor } from './provider/Appveyor.js'
 import { Basecamp } from './provider/Basecamp.js'
+import { BaseProvider } from './provider/BaseProvider.js'
 import { BitBucket } from './provider/Bitbucket.js'
 import { BitBucketServer } from './provider/BitBucketServer.js'
 import { CircleCi } from './provider/CircleCi.js'
@@ -31,7 +23,14 @@ import { Trello } from './provider/Trello.js'
 import { Unity } from './provider/Unity.js'
 import { UptimeRobot } from './provider/UptimeRobot.js'
 import { VSTS } from './provider/VSTS.js'
+import { ErrorUtil } from './util/ErrorUtil.js'
+import { LoggerUtil } from './util/LoggerUtil.js'
 import { Type } from './util/TSUtility.js'
+import axios from 'axios'
+import cors from 'cors'
+import dotenv from 'dotenv'
+import express, { Response } from 'express'
+import * as fs from 'fs'
 
 dotenv.config()
 
@@ -92,7 +91,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use(express.static('public'))
 
 app.get('/', (_req, res) => {
-    res.redirect('https://commit451.github.io/skyhook-web')
+    res.sendFile(__dirname + '/public/hello.html');
 })
 
 app.get('/api/providers', (_req, res) => {
@@ -120,6 +119,7 @@ app.get('/api/webhooks/:webhookID/:webhookSecret/:from', (req, res) => {
 })
 
 app.post('/api/webhooks/:webhookID/:webhookSecret/:from', async (req, res) => {
+    console.log("burdayım");
     const webhookID = req.params.webhookID
     const webhookSecret = req.params.webhookSecret
     const providerPath = req.params.from
