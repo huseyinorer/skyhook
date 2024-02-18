@@ -20,29 +20,43 @@
         ol {
             width: 500px; /* Liste öğelerinin genişliğini ayarla */
             margin: 0 auto; /* Liste öğelerini yatayda ortala */
-            border: 2px solid green; /* Yeşil çizgili sınır ekle */
+            border: 2px dashed green; /* Yeşil çizgili kesikli sınır ekle */
             padding: 20px; /* Kenar boşlukları ekle */
             border-radius: 10px; /* Kenarlara yuvarlaklık ekle */
-            background-color: rgba(0, 128, 0, 0.5); /* Arka plan rengini yeşil yap, biraz saydamlık ekle */
+            overflow-wrap: break-word; /* Sığmayan satırları alt satıra koy */
+            background-color: transparent; /* Arkaplanı şeffaf yap */
         }
         ol li {
             text-align: left; /* Liste öğelerini sola hizala */
             margin-bottom: 10px; /* Liste öğeleri arasına boşluk ekle */
         }
+        code {
+            background-color: #222; /* Kod bloğu arka planını koyu renk yap */
+            color: #fff; /* Kod bloğu metnini beyaz yap */
+            padding: 5px; /* Kod bloğunun içeriğini biraz içeride yap */
+            border-radius: 5px; /* Kod bloğu kenarlarını yuvarlak yap */
+        }
     </style>
 </head>
 <body>
     <div class="content">
-        <h1>Welcome to Hello Page</h1>
-        <p>This is a vertically centered page with dark theme</p>
+        <h1>Welcome to Skyhook</h1>
+        
         <ol>
+        <h2>Docker</h2>
+        <li>docker pull huseyinorer/skyhook</li>
+        <li>docker run -it --rm -p 80:8080 huseyinorer/skyhook</li>        		               <li>https://localhost:80/api/webhooks/firstPartOfWebhook/secondPartOfWebhook/providerGoesHere</li>
+        
+        </ol>
+        </br>
+        <ol><h2>How to use</h2>
             <li>Create a webhook in Discord (Server Settings -> Webhooks -> Create Webhook)</li>
             <li>Copy the webhook url</li>
             <li>Turn the Discord webhook url into a skyhook webhook url like so: <br>
             <code>Replace discord.com in url with skyhookapi.com
-                https://discord.com/api/webhooks/firstPartOfWebhook/secondPartOfWebhook
-                ->
-                https://YOURDOMAIN.com/api/webhooks/firstPartOfWebhook/secondPartOfWebhook</code>
+https://discord.com/api/webhooks/firstPartOfWebhook/secondPartOfWebhook
+->
+https://YOURDOMAIN.com/api/webhooks/firstPartOfWebhook/secondPartOfWebhook</code>
             </li>
             <li>Add the provider you want to the end of the url: <br>
             <code>https://YOURDOMAIN.com/api/webhooks/firstPartOfWebhook/secondPartOfWebhook/providerGoesHere</code></li>
