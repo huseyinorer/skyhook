@@ -13,8 +13,8 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Docker login
-      run: 'docker login -u jawnnypoo -p ${{ secrets.DOCKER_HUB_PASSWORD }}'
+      run: 'docker login -u huseyinorer -p ${{ secrets.DOCKER_HUB_PASSWORD }}'
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag commit451/skyhook:latest
+      run: docker build . --file Dockerfile --tag huseyinorer/skyhook:latest
     - name: Push the Docker image
-      run: docker push commit451/skyhook
+      run: docker push huseyinorer/skyhook
