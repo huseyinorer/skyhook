@@ -1,3 +1,6 @@
+I have made some customizations on the BaseProvider and BitbucketProvider. I have made them noticeable with special colors and emojis based on the statuses on Bitbucket.
+
+
 ## Setup
 
 1. Create a webhook in Discord (Server Settings -> Webhooks -> Create Webhook)
