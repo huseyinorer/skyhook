@@ -119,8 +119,15 @@ export class BitBucket extends TypeParseProvider {
                     embed.fields = fields
                 }
 
-                embed.author = this.extractAuthor()
+                embed.author = this.extractAuthor()                
                 this.addEmbed(embed)
+            }
+            //footer repo avatar and
+            if (this.body.repository.name != null && this.body.repository.links.avatar.href != null) {
+                this.embed.footer = {
+                    text: this.body.repository.name,
+                    icon_url: this.body.repository.links.avatar.href
+                }
             }
         }
     }
@@ -128,6 +135,14 @@ export class BitBucket extends TypeParseProvider {
     public async repoFork(): Promise<void> {
         this.embed.author = this.extractAuthor()
         this.embed.description = 'Created a [`fork`](' + this.baseLink + this.body.fork.full_name + ') of [`' + this.body.repository.name + '`](' + this.baseLink + this.body.repository.full_name + ')'
+        //footer repo avatar and
+        if (this.body.repository.name != null && this.body.repository.links.avatar.href != null) {
+            this.embed.footer = {
+                text: this.body.repository.name,
+                icon_url: this.body.repository.links.avatar.href
+            }
+        }
+        
         this.addEmbed(this.embed)
     }
 
@@ -152,6 +167,14 @@ export class BitBucket extends TypeParseProvider {
         this.embed.description = changes.join('\n')
         this.embed.title = `[${this.body.repository.full_name}] General information updated`
 
+        //footer repo avatar and
+        if (this.body.repository.name != null && this.body.repository.links.avatar.href != null) {
+            this.embed.footer = {
+                text: this.body.repository.name,
+                icon_url: this.body.repository.links.avatar.href
+            }
+        }
+        
         this.addEmbed(this.embed)
     }
 
@@ -160,6 +183,14 @@ export class BitBucket extends TypeParseProvider {
         this.embed.title = `[${this.body.repository.full_name}] New comment on commit \`${this.body.commit.hash.substring(0, 7)}\``
         this.embed.description = (this.body.comment.content.html.replace(/<.*?>/g, '').length > 1024) ? this.body.comment.content.html.replace(/<.*?>/g, '').substring(0, 1023) + '\u2026' : this.body.comment.content.html.replace(/<.*?>/g, '')
         this.embed.url = this.baseLink + this.body.repository.full_name + '/commits/' + this.body.commit.hash
+        //footer repo avatar and
+        if (this.body.repository.name != null && this.body.repository.links.avatar.href != null) {
+            this.embed.footer = {
+                text: this.body.repository.name,
+                icon_url: this.body.repository.links.avatar.href
+            }
+        }
+        
         this.addEmbed(this.embed)
     }
 
@@ -167,6 +198,14 @@ export class BitBucket extends TypeParseProvider {
         this.embed.title = this.body.commit_status.name
         this.embed.description = '**State:** ' + this.body.commit_status.state + '\n' + this.body.commit_status.description
         this.embed.url = this.body.commit_status.url
+        //footer repo avatar and
+        if (this.body.repository.name != null && this.body.repository.links.avatar.href != null) {
+            this.embed.footer = {
+                text: this.body.repository.name,
+                icon_url: this.body.repository.links.avatar.href
+            }
+        }
+        
         this.addEmbed(this.embed)
     }
 
@@ -186,7 +225,15 @@ export class BitBucket extends TypeParseProvider {
         else {
             this.embed.title = '✅ ' + this.embed.title;
             this.setEmbedColor(this.green)
+        }        
+        //footer repo avatar and
+        if (this.body.repository.name != null && this.body.repository.links.avatar.href != null) {
+            this.embed.footer = {
+                text: this.body.repository.name,
+                icon_url: this.body.repository.links.avatar.href
+            }
         }
+        
         this.addEmbed(this.embed)
     }
 
@@ -222,6 +269,14 @@ export class BitBucket extends TypeParseProvider {
 
         this.embed.description = states.join('\n')
 
+        //footer repo avatar and
+        if (this.body.repository.name != null && this.body.repository.links.avatar.href != null) {
+            this.embed.footer = {
+                text: this.body.repository.name,
+                icon_url: this.body.repository.links.avatar.href
+            }
+        }
+        
         this.addEmbed(this.embed)
     }
 
@@ -280,6 +335,14 @@ export class BitBucket extends TypeParseProvider {
 
         this.embed.description = changes.join('\n')
 
+        //footer repo avatar and
+        if (this.body.repository.name != null && this.body.repository.links.avatar.href != null) {
+            this.embed.footer = {
+                text: this.body.repository.name,
+                icon_url: this.body.repository.links.avatar.href
+            }
+        }
+        
         this.addEmbed(this.embed)
     }
 
@@ -288,6 +351,14 @@ export class BitBucket extends TypeParseProvider {
         this.embed.title = `[${this.body.repository.full_name}] New comment on issue #${this.body.issue.id}: ${this.body.issue.title}`
         this.embed.url = this.extractIssueUrl()
         this.embed.description = MarkdownUtil._formatMarkdown(BitBucket._formatLargeString(this.body.comment.content.raw), this.embed)
+        //footer repo avatar and
+        if (this.body.repository.name != null && this.body.repository.links.avatar.href != null) {
+            this.embed.footer = {
+                text: this.body.repository.name,
+                icon_url: this.body.repository.links.avatar.href
+            }
+        }
+        
         this.addEmbed(this.embed)
     }
 
@@ -297,6 +368,14 @@ export class BitBucket extends TypeParseProvider {
         this.embed.url = this.extractPullRequestUrl()
         this.embed.description = this.body.pullrequest.description
         this.embed.fields = [this.extractPullRequestField()]
+        //footer repo avatar and
+        if (this.body.repository.name != null && this.body.repository.links.avatar.href != null) {
+            this.embed.footer = {
+                text: this.body.repository.name,
+                icon_url: this.body.repository.links.avatar.href
+            }
+        }
+        
         this.addEmbed(this.embed)
     }
 
@@ -306,6 +385,14 @@ export class BitBucket extends TypeParseProvider {
         this.embed.url = this.extractPullRequestUrl()
         this.embed.description = this.body.pullrequest.description
         this.embed.fields = [this.extractPullRequestField()]
+        //footer repo avatar and
+        if (this.body.repository.name != null && this.body.repository.links.avatar.href != null) {
+            this.embed.footer = {
+                text: this.body.repository.name,
+                icon_url: this.body.repository.links.avatar.href
+            }
+        }
+        
         this.addEmbed(this.embed)
     }
 
@@ -314,6 +401,14 @@ export class BitBucket extends TypeParseProvider {
         this.embed.title = `✅ [${this.body.repository.full_name}] Approved pull request: #${this.body.pullrequest.id} ${this.body.pullrequest.title}`
         this.embed.url = this.extractPullRequestUrl()
         this.setEmbedColor(this.green)
+        //footer repo avatar and
+        if (this.body.repository.name != null && this.body.repository.links.avatar.href != null) {
+            this.embed.footer = {
+                text: this.body.repository.name,
+                icon_url: this.body.repository.links.avatar.href
+            }
+        }
+        
         this.addEmbed(this.embed)
     }
 
@@ -322,6 +417,14 @@ export class BitBucket extends TypeParseProvider {
         this.embed.title = `❗ [${this.body.repository.full_name}] Removed approval for pull request: #${this.body.pullrequest.id} ${this.body.pullrequest.title}`
         this.embed.url = this.extractPullRequestUrl()
         this.setEmbedColor(this.yellow)
+        //footer repo avatar and
+        if (this.body.repository.name != null && this.body.repository.links.avatar.href != null) {
+            this.embed.footer = {
+                text: this.body.repository.name,
+                icon_url: this.body.repository.links.avatar.href
+            }
+        }
+        
         this.addEmbed(this.embed)
     }
 
@@ -329,6 +432,14 @@ export class BitBucket extends TypeParseProvider {
         this.embed.author = this.extractAuthor()
         this.embed.title = `🎉 [${this.body.repository.full_name}] Merged pull request: #${this.body.pullrequest.id} ${this.body.pullrequest.title}`
         this.embed.url = this.extractPullRequestUrl()
+        //footer repo avatar and
+        if (this.body.repository.name != null && this.body.repository.links.avatar.href != null) {
+            this.embed.footer = {
+                text: this.body.repository.name,
+                icon_url: this.body.repository.links.avatar.href
+            }
+        }
+        
         this.addEmbed(this.embed)
     }
 
@@ -338,6 +449,14 @@ export class BitBucket extends TypeParseProvider {
         this.embed.url = this.extractPullRequestUrl()
         this.embed.description = (typeof this.body.pullrequest.reason !== 'undefined') ? ((this.body.pullrequest.reason.replace(/<.*?>/g, '').length > 1024) ? this.body.pullrequest.reason.replace(/<.*?>/g, '').substring(0, 1023) + '\u2026' : this.body.pullrequest.reason.replace(/<.*?>/g, '')) : ''
         this.setEmbedColor(this.red)
+        //footer repo avatar and
+        if (this.body.repository.name != null && this.body.repository.links.avatar.href != null) {
+            this.embed.footer = {
+                text: this.body.repository.name,
+                icon_url: this.body.repository.links.avatar.href
+            }
+        }
+        
         this.addEmbed(this.embed)
     }
 
@@ -346,6 +465,14 @@ export class BitBucket extends TypeParseProvider {
         this.embed.title = `[${this.body.repository.full_name}] New comment on pull request: #${this.body.pullrequest.id} ${this.body.pullrequest.title}`
         this.embed.url = this.extractPullRequestUrl()
         this.embed.description = (this.body.comment.content.html.replace(/<.*?>/g, '').length > 1024) ? this.body.comment.content.html.replace(/<.*?>/g, '').substring(0, 1023) + '\u2026' : this.body.comment.content.html.replace(/<.*?>/g, '')
+        //footer repo avatar and
+        if (this.body.repository.name != null && this.body.repository.links.avatar.href != null) {
+            this.embed.footer = {
+                text: this.body.repository.name,
+                icon_url: this.body.repository.links.avatar.href
+            }
+        }
+        
         this.addEmbed(this.embed)
     }
 
@@ -354,6 +481,14 @@ export class BitBucket extends TypeParseProvider {
         this.embed.title = `[${this.body.repository.full_name}] Updated comment on pull request: #${this.body.pullrequest.id} ${this.body.pullrequest.title}`
         this.embed.url = this.extractPullRequestUrl()
         this.embed.description = (this.body.comment.content.html.replace(/<.*?>/g, '').length > 1024) ? this.body.comment.content.html.replace(/<.*?>/g, '').substring(0, 1023) + '\u2026' : this.body.comment.content.html.replace(/<.*?>/g, '')
+        //footer repo avatar and
+        if (this.body.repository.name != null && this.body.repository.links.avatar.href != null) {
+            this.embed.footer = {
+                text: this.body.repository.name,
+                icon_url: this.body.repository.links.avatar.href
+            }
+        }
+        
         this.addEmbed(this.embed)
     }
 
@@ -362,6 +497,14 @@ export class BitBucket extends TypeParseProvider {
         this.embed.title = `[${this.body.repository.full_name}] Deleted comment on pull request: #${this.body.pullrequest.id} ${this.body.pullrequest.title}`
         this.embed.description = (this.body.comment.content.html.replace(/<.*?>/g, '').length > 1024) ? this.body.comment.content.html.replace(/<.*?>/g, '').substring(0, 1023) + '\u2026' : this.body.comment.content.html.replace(/<.*?>/g, '')
         this.embed.url = this.extractPullRequestUrl()
+        //footer repo avatar and
+        if (this.body.repository.name != null && this.body.repository.links.avatar.href != null) {
+            this.embed.footer = {
+                text: this.body.repository.name,
+                icon_url: this.body.repository.links.avatar.href
+            }
+        }
+        
         this.addEmbed(this.embed)
     }
 
@@ -370,6 +513,14 @@ export class BitBucket extends TypeParseProvider {
         this.embed.title = `🔎 [${this.body.repository.full_name}] Changes requested for pull request: #${this.body.pullrequest.id} ${this.body.pullrequest.title}`
         this.embed.url = this.extractPullRequestUrl()
         this.setEmbedColor(this.yellow)
+        //footer repo avatar and
+        if (this.body.repository.name != null && this.body.repository.links.avatar.href != null) {
+            this.embed.footer = {
+                text: this.body.repository.name,
+                icon_url: this.body.repository.links.avatar.href
+            }
+        }
+        
         this.addEmbed(this.embed)
     }
 
@@ -377,6 +528,14 @@ export class BitBucket extends TypeParseProvider {
         this.embed.author = this.extractAuthor()
         this.embed.title = `[${this.body.repository.full_name}] Removed changes requested for pull request: #${this.body.pullrequest.id} ${this.body.pullrequest.title}`
         this.embed.url = this.extractPullRequestUrl()
+        //footer repo avatar and
+        if (this.body.repository.name != null && this.body.repository.links.avatar.href != null) {
+            this.embed.footer = {
+                text: this.body.repository.name,
+                icon_url: this.body.repository.links.avatar.href
+            }
+        }
+        
         this.addEmbed(this.embed)
     }
 

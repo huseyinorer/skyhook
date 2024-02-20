@@ -85,10 +85,13 @@ export abstract class BaseProvider {
 
     protected addEmbed(embed: Embed): void {
         // TODO check to see if too many fields
-        // add the footer to all embeds added
-        embed.footer = {
-            text: 'Abis Teknoloji <3' ,
-            icon_url: 'https://i.ibb.co/vvRcqhb/abis-teknoloji-logo.png'
+        // add the footer to all embeds added        
+        if(embed.footer == null)
+        {
+            embed.footer = {            
+                text: 'Abis Teknoloji <3',            
+                icon_url: 'https://i.ibb.co/vvRcqhb/abis-teknoloji-logo.png'           
+            }
         }
         if (this.embedColor != null) {
             embed.color = this.embedColor
