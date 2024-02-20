@@ -119,7 +119,6 @@ app.get('/api/webhooks/:webhookID/:webhookSecret/:from', (req, res) => {
 })
 
 app.post('/api/webhooks/:webhookID/:webhookSecret/:from', async (req, res) => {
-    console.log("burdayım");
     const webhookID = req.params.webhookID
     const webhookSecret = req.params.webhookSecret
     const providerPath = req.params.from
