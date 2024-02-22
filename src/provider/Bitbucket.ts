@@ -504,8 +504,7 @@ export class BitBucket extends TypeParseProvider {
                 icon_url: this.body.repository.links.avatar.href
             }
         }
-        
-        this.addEmbed(this.embed)
+        this.addEmbed(this.embed)         
     }
 
     public async pullrequestChangesRequestCreated(): Promise<void> {
