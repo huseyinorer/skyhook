@@ -89,7 +89,7 @@ export abstract class BaseProvider {
         if(embed.footer == null)
         {
             embed.footer = {            
-                text: 'Abis Teknoloji <3',            
+                text: 'Abis Teknoloji',            
                 icon_url: 'https://i.ibb.co/vvRcqhb/abis-teknoloji-logo.png'           
             }
         }
