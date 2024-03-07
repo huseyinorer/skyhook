@@ -196,9 +196,10 @@ export class BitBucket extends TypeParseProvider {
     }
 
     public async repoCommitStatusCreated(): Promise<void> {
-        this.embed.title = this.body.commit_status.name
+        this.embed.title = '⏳ ' + this.body.commit_status.name
         this.embed.description = '**State:** ' + this.body.commit_status.state + '\n' + this.body.commit_status.description
         this.embed.url = this.body.commit_status.url
+        this.setEmbedColor(this.yellow)
         //footer repo avatar and
         if (this.body.repository.name != null && this.body.repository.links.avatar.href != null) {
             this.embed.footer = {
@@ -210,8 +211,7 @@ export class BitBucket extends TypeParseProvider {
         this.addEmbed(this.embed)
     }
 
-    public async repoCommitStatusUpdated(): Promise<void> {
-        this.embed.author = this.extractAuthor()
+    public async repoCommitStatusUpdated(): Promise<void> {       
         this.embed.title = this.body.commit_status.name
         this.embed.url = this.body.commit_status.url
         this.embed.description = '**State:** ' + this.body.commit_status.state + '\n' + this.body.commit_status.description
@@ -367,7 +367,7 @@ export class BitBucket extends TypeParseProvider {
         this.embed.author = this.extractAuthor()
         this.embed.title = `💥 Pull request opened: #${this.body.pullrequest.id} ${this.body.pullrequest.title}`
         this.embed.url = this.extractPullRequestUrl()
-        this.embed.description = this.body.pullrequest.description
+        this.embed.description = this.cleanPullRequestDescription()
         this.embed.fields = [this.extractPullRequestField()]
         //footer repo avatar and
         if (this.body.repository.name != null && this.body.repository.links.avatar.href != null) {
@@ -382,9 +382,9 @@ export class BitBucket extends TypeParseProvider {
 
     public async pullrequestUpdated(): Promise<void> {
         this.embed.author = this.extractAuthor()
-        this.embed.title = `Updated pull request: #${this.body.pullrequest.id} ${this.body.pullrequest.title}`
+        this.embed.title = `📢 Updated pull request: #${this.body.pullrequest.id} ${this.body.pullrequest.title}`
         this.embed.url = this.extractPullRequestUrl()
-        this.embed.description = this.body.pullrequest.description
+        this.embed.description = this.cleanPullRequestDescription()
         this.embed.fields = [this.extractPullRequestField()]
         //footer repo avatar and
         if (this.body.repository.name != null && this.body.repository.links.avatar.href != null) {
@@ -566,5 +566,18 @@ export class BitBucket extends TypeParseProvider {
 
     private extractIssueUrl(): string {
         return this.baseLink + this.body.repository.full_name + '/issues/' + this.body.issue.id
+    }
+
+    private cleanPullRequestDescription(): string {
+        // Remove '{: data-inline-card='' }' from the description
+        const cleanDescription = this.body.pullrequest.description.replace(/\{: data-inline-card='' \}/g, '');
+        // Extract the URL from the cleaned description
+        const urlRegex = /\[([^\]]*)\]\(([^)]*)\)/;
+        const match = cleanDescription.match(urlRegex);
+        if (match && match.length > 2) {
+            return match[1] + "\n\n"; // Returning the link text instead of the whole match
+        }
+
+        return cleanDescription + "\n\n";
     }
 }
