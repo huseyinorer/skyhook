@@ -382,7 +382,7 @@ export class BitBucket extends TypeParseProvider {
 
     public async pullrequestUpdated(): Promise<void> {
         this.embed.author = this.extractAuthor()
-        this.embed.title = `📢 Updated pull request: #${this.body.pullrequest.id} ${this.body.pullrequest.title}`
+        this.embed.title = `🔔 Updated pull request: #${this.body.pullrequest.id} ${this.body.pullrequest.title}`
         this.embed.url = this.extractPullRequestUrl()
         this.embed.description = this.cleanPullRequestDescription()
         this.embed.fields = [this.extractPullRequestField()]
