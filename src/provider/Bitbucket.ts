@@ -575,9 +575,9 @@ export class BitBucket extends TypeParseProvider {
         const urlRegex = /\[([^\]]*)\]\(([^)]*)\)/;
         const match = cleanDescription.match(urlRegex);
         if (match && match.length > 2) {
-            return match[1] + "\n\n"; // Returning the link text instead of the whole match
+            return match[1]; // Returning the link text instead of the whole match
         }
 
-        return cleanDescription + "\n\n";
+        return cleanDescription;
     }
 }
